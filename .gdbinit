@@ -33,6 +33,7 @@ import io
 import itertools
 import math
 import os
+import platform
 import re
 import struct
 import traceback
@@ -2372,7 +2373,13 @@ set python print-stack full
 
 # Start ------------------------------------------------------------------------
 
-python Dashboard.start()
+python
+Dashboard.start()
+
+if 'loongarch' in platform.processor():
+    reg_list = 'zero ra tp sp a0 a1 a2 a3 a4 a5 a6 a7 t0 t1 t2 t3 t4 t5 t6 t7 t8 x fp s0 s1 s2 s3 s4 s5 s6 s7 s8 pc'
+    gdb.execute(f"dashboard registers -style list '{reg_list}'", to_string = True)
+end
 
 # File variables ---------------------------------------------------------------
 
